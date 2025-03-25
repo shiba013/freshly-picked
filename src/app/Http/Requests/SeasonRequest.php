@@ -24,14 +24,15 @@ class SeasonRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'id' => 'required| accepted',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => '季節を選択してください',
+            'id.required' => '季節を選択してください',
+            'id.accepted' => '季節を選択してください',
         ];
     }
 }

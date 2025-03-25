@@ -7,27 +7,37 @@ use App\Models\Product;
 use App\Models\Season;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\SeasonRequest;
+use App\Http\Requests\ProductSeasonRequest;
 
 
 class ProductController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $seasons = Season::with('products')->paginate(6);
         $products = Product::with('seasons')->get();
         return view('products', compact('seasons','products'));
     }
 
-    public function getRegister() {
+    public function register()
+    {
         $seasons = Season::with('products')->get();
         return view('register', compact('seasons'));
     }
 
-    public function postRegister(Request $request) {
+    public function create(ProductSeasonRequest $request)
+    {
+        if ($request->has('back')) {
+            return view('/products');
+        }
+
         $seasons = Season::with('products')->get();
-        // 画像を保存
-        $imagePath = $request->file('image')->store('images', 'public');
-        // 保存された画像のURLを取得
-        $image = asset('storage/' . $imagePath);
+        $season = Season::create($request->only(['name']));
+
+        $image = $request->file('image')->store('images', 'public');
+        $request['image'] = $image;
+        $product = $request->only(['name','price','image','description']);
+        Product::create($product);
         return view('products');
     }
 

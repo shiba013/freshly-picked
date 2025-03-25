@@ -118,6 +118,23 @@
     align-items: center;
 }
 
+.create-button {
+    width: 200px;
+    height: 50px;
+    padding: 12px 10px;
+    margin-left: 200px;
+    background-color: rgba(245, 200, 0, 1);
+    border: none;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+    color: rgba(75, 75, 75, 1);
+    font-size: 16px;
+}
+
+.create__button:active {
+    background-color: rgba(221, 180, 0, 1);
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
 .back-button {
     width: 200px;
     height: 50px;
@@ -127,23 +144,24 @@
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
     color: rgba(75, 75, 75, 1);
     font-size: 16px;
-    margin-right: 40px;
+    position: absolute;
+    top: 115%;
+    bottom: 0%;
+    left: 30%;
+    right: 0%;
+    transform: translateY(195%);
 }
 
-.create-button {
-    width: 200px;
-    height: 50px;
-    padding: 12px 10px;
-    background-color: rgba(245, 200, 0, 1);
-    border: none;
+.back__button:active {
+    background-color: rgba(224, 223, 222, 1);
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
-    color: rgba(75, 75, 75, 1);
-    font-size: 16px;
 }
 
 .alert {
     color: rgba(253, 7, 7, 1);
     font-size: 14px;
+    padding: 10px;
+    height: 20px;
 }
 
 .alert--danger {

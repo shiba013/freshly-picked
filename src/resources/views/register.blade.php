@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="form">
-    <form action="/product" method="post" class="create-form">
+    <form action="/products" method="post" class="create-form" enctype="multipart/form-data">
         @csrf
         <div class="create-form__group">
             <label for="name" class="create-form__label">
@@ -36,11 +36,13 @@
             </label>
             <input type="text" name="price" id="price" class="create-form__input" placeholder="値段を入力">
             <div class="alert">
+                @if($errors->has('price'))
                 <p class="alert--danger">
-                    @error('price')
+                    @foreach($errors->get('price') as $message)
                     {{ $message }}
-                    @enderror
+                    @endforeach
                 </p>
+                @endif
             </div>
         </div>
 
@@ -52,13 +54,16 @@
             <div class="fruit-img">
                 <img src="" alt="">
             </div>
-            <input type="file" name="image" id="image" class="create-form__file">
+            <input type="file" name="image" id="image" class="create-form__file"
+            accept="image/png, image/jpeg">
             <div class="alert">
+                @if($errors->has('image'))
                 <p class="alert--danger">
-                    @error('image')
+                    @foreach($errors->get('image') as $message)
                     {{ $message }}
-                    @enderror
+                    @endforeach
                 </p>
+                @endif
             </div>
         </div>
 
@@ -73,13 +78,13 @@
                 <label for="season_id" class="season-option__label">
                     <input type="checkbox" name="season_id" id="season_id"
                     value="{{ old('season_id') }}" class="season-option__input">
-                    <span class="season-option__span">{{ $season->name}}</span>
+                    <span class="season-option__span">{{ $season->name }}</span>
                 </label>
                 @endforeach
             </div>
             <div class="alert">
                 <p class="alert--danger">
-                    @error('season_id')
+                    @error('id')
                     {{ $message }}
                     @enderror
                 </p>
@@ -93,18 +98,23 @@
             </label>
             <textarea name="description" id="description" cols="100" rows="10" class="create-form__textarea" placeholder="商品の説明を入力"></textarea>
             <div class="alert">
+                @if($errors->has('description'))
                 <p class="alert--danger">
-                    @error('description')
+                    @foreach($errors->get('description') as $message)
                     {{ $message }}
-                    @enderror
+                    @endforeach
                 </p>
+                @endif
             </div>
         </div>
 
         <div class="button">
-            <input type="submit" value="戻る" class="back-button" name="back">
             <input type="submit" value="登録" class="create-button" name="send">
         </div>
+    </form>
+
+    <form action="/products" method="get" class="back-form">
+        <button type="submit" class="back-button">戻る</button>
     </form>
 </div>
 @endsection

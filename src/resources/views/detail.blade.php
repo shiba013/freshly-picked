@@ -15,7 +15,9 @@
 
 @section('content')
 <div class="fruit-content">
-    <form action="/products" method="post" class="edit-form">
+    <form action="/products/{productId}/update" method="post" class="edit-form">
+        @method('patch')
+        @csrf
         <div class="group">
             <div class="fruit-card">
                 <div class="alert">
