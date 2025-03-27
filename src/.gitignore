@@ -3,6 +3,9 @@
 /public/storage
 /storage/*
 !/storage/app/public
+!/storage/app/public/image
+!/storage/app/public/image/*.png
+/vendor
 .env
 .env.backup
 .phpunit.result.cache
