@@ -15,7 +15,6 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $param = [
-            'id' => 1,
             'name' => 'キウイ',
             'price' => '800',
             'image' =>'images/kiwi.png',
@@ -23,7 +22,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 2,
             'name' => 'ストロベリー',
             'price' => '1200',
             'image' =>'images/strawberry.png',
@@ -31,7 +29,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 3,
             'name' => 'オレンジ',
             'price' => '850',
             'image' =>'images/orange.png',
@@ -39,7 +36,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 4,
             'name' => 'スイカ',
             'price' => '700',
             'image' =>'images/watermelon.png',
@@ -47,7 +43,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 5,
             'name' => 'ピーチ',
             'price' => '1000',
             'image' =>'images/peach.png',
@@ -55,7 +50,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 6,
             'name' => 'シャインマスカット',
             'price' => '1400',
             'image' =>'images/muscat.png',
@@ -63,7 +57,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 7,
             'name' => 'パイナップル',
             'price' => '800',
             'image' =>'images/pineapple.png',
@@ -71,7 +64,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 8,
             'name' => 'ブドウ',
             'price' => '1100',
             'image' =>'images/grapes.png',
@@ -79,7 +71,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 9,
             'name' => 'バナナ',
             'price' => '600',
             'image' =>'images/banana.png',
@@ -87,7 +78,6 @@ class ProductSeeder extends Seeder
         ];
         DB::table('products')->insert($param);
         $param = [
-            'id' => 10,
             'name' => 'メロン',
             'price' => '900',
             'image' =>'images/melon.png',
