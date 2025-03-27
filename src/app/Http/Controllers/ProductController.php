@@ -5,47 +5,102 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Season;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProductRequest;
-use App\Http\Requests\SeasonRequest;
-use App\Http\Requests\ProductSeasonRequest;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $seasons = Season::with('products')->paginate(6);
-        $products = Product::with('seasons')->get();
+        $seasons = Season::with('products')->get();
+        $products = Product::with('seasons')->paginate(6);
         return view('products', compact('seasons','products'));
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->has('reset')) {
+            return redirect('/products');
+        }
+
+        $products = Product::with('seasons')
+        ->NameSearch($request->name)
+        ->KeywordSearch($request->keyword)
+        ->PriceSort($request->sort)
+        ->paginate(6);
+        $seasons = Season::with('products')->get();
+        return view('products', compact('products', 'seasons'));
+    }
+
+    public function detail($productId)
+    {
+        $product = Product::with('seasons')->find($productId);
+        $seasons = Season::with('products')->get();
+        $seasonIds = $product->seasons->pluck('id')->toArray();
+        return view('detail', compact('product', 'seasons', 'seasonIds'));
+    }
+
+    public function update(ProductRequest $request)
+    {
+        //DB::table('product_season')->insert($param);
+        $product = Product::with('seasons')->get();
+        Product::find($request->id)->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imagePath,
+            'description' => $request->description,
+        ]);
+        $product->seasons()->attach($request->seasons);
+        return redirect('/products');
+    }
+
+    public function destroy(Request $request)
+    {
+        Product::find($request->id)->delete();
+        return redirect('/products');
     }
 
     public function register()
     {
-        $seasons = Season::with('products')->get();
+        $seasons = Season::all();
         return view('register', compact('seasons'));
     }
 
-    public function create(ProductSeasonRequest $request)
+    public function create(ProductRequest $request)
     {
-        if ($request->has('back')) {
-            return view('/products');
-        }
+        //画像の保存
+        $image = $request->file('image')->getClientOriginalName();
+        $imagePath = 'fruit-img/' . $image;
+        $request->file('image')->storeAs('fruit-img', basename($imagePath), 'public');
+        //Storage::put('public/fruits-img', $filename);
 
-        $seasons = Season::with('products')->get();
-        $season = Season::create($request->only(['name']));
+        //商品の保存
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imagePath,
+            'description' => $request->description,
+        ]);
 
-        $image = $request->file('image')->store('images', 'public');
-        $request['image'] = $image;
-        $product = $request->only(['name','price','image','description']);
-        Product::create($product);
-        return view('products');
+        // 選択された季節を商品に関連付けて保存
+        $product->seasons()->attach($request->seasons);
+
+        return redirect('/products');
+    }
+
+/*
+    public function preview($filename)
+    {
+        $path = storage_path("app/public/fruits-img/{$filename}");
+        return response()->file($path);
     }
 
     public function store(Request $request) {
         $seasons = Season::with('products')->scopeProductId($request->id)->get();
         $products = Product::with('seasons')->get();
         $productId = $products->only(['id','name','price','image','description']);
-        dd($prooductId);
         return view('detail', $productId);
     }
 
@@ -63,9 +118,5 @@ class ProductController extends Controller
         }
         return view('detail', compact('seasons'));
     }
-
-    public function detail() {
-        $seasons = Season::with('products')->get();
-        return view('detail', compact('seasons'));
-    }
+    */
 }

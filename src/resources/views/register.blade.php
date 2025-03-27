@@ -52,10 +52,9 @@
                 <span class="create-form__span">必須</span>
             </label>
             <div class="fruit-img">
-                <img src="" alt="">
+                <img src="{{ asset('/fruits-img/$product->image') }}" alt="">
             </div>
-            <input type="file" name="image" id="image" class="create-form__file"
-            accept="image/png, image/jpeg">
+            <input type="file" name="image" id="image" class="create-form__file">
             <div class="alert">
                 @if($errors->has('image'))
                 <p class="alert--danger">
@@ -68,23 +67,23 @@
         </div>
 
         <div class="create-form__group">
-            <label for="season_id" class="create-form__label">
+            <label for="" class="create-form__label">
                 季節
                 <span class="create-form__span">必須</span>
                 <span class="create-form__multi">複数選択可</span>
             </label>
             <div class="season-option">
                 @foreach($seasons as $season)
-                <label for="season_id" class="season-option__label">
-                    <input type="checkbox" name="season_id" id="season_id"
-                    value="{{ old('season_id') }}" class="season-option__input">
+                <label for="{{ $season->id }}" class="season-option__label">
+                    <input type="checkbox" name="seasons[]" id="{{ $season->id }}"
+                    value="{{ $season->id }}" class="season-option__input">
                     <span class="season-option__span">{{ $season->name }}</span>
                 </label>
                 @endforeach
             </div>
             <div class="alert">
                 <p class="alert--danger">
-                    @error('id')
+                    @error('seasons')
                     {{ $message }}
                     @enderror
                 </p>
@@ -109,12 +108,12 @@
         </div>
 
         <div class="button">
-            <input type="submit" value="登録" class="create-button" name="send">
+            <input type="submit" value="登録" class="create-button">
         </div>
     </form>
 
     <form action="/products" method="get" class="back-form">
-        <button type="submit" class="back-button">戻る</button>
+        <button type="submit" class="button back-button">戻る</button>
     </form>
 </div>
 @endsection

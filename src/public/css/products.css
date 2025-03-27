@@ -27,6 +27,7 @@
 
 .search-form {
     padding: 20px;
+    width: 220px;
 }
 
 .search-form__items {
@@ -45,7 +46,7 @@
 }
 
 .search__text {
-    width: 220px;
+    width: 90%;
     height: 30px;
     padding: 14.5px 10px;
     margin-bottom: 20px;
@@ -101,12 +102,16 @@
     border: 1px solid rgba(224, 223, 222, 1);
 }
 
-select:invalid {
+.sort__select {
     color: rgba(224, 223, 222, 1);
 }
 
-select option {
+.sort__select:focus,
+.sort__select option {
     color: black;
+}
+
+select option {
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -133,18 +138,17 @@ select option {
     background-color: #fff;
 }
 
-.main {
+.cards {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
 }
 
 .card-content {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: rgba(75, 75, 75, 1);
 }
 
 .fruit-card {
@@ -157,19 +161,14 @@ select option {
 .fruit-card__button {
     width: 100%;
     height: 100%;
-    display: none;
-}
-
-.fruit-card__input {
-    width: 100%;
-    height: 100%;
 }
 
 .fruit-img img {
     width: 100%;
+    height: 250px;
 }
 
-.card-content {
+.card-group {
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -180,5 +179,8 @@ select option {
 }
 
 .paginate {
-    margin: 0px auto;
+    margin-top: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }

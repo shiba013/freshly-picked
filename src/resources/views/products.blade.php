@@ -23,49 +23,53 @@
         <div class="search-form__items">
             <label for="sort" class="sort__label">価格順で表示</label>
             <div class="sort__group">
-                <select name="sort" id="sort" class="sort__select" onchange="this.form.submit()" required>
-                    <option value="" disable selected>価格で並べ替え</option>
+                <select name="sort" id="sort" class="sort__select" onchange="this.form.submit()">
+                    <option value="" style="color:#e0dfde" disable selected>価格で並べ替え</option>
                     <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>価格が高い順</option>
                     <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>価格が安い順</option>
                 </select>
             </div>
         </div>
         <div class="search-form__items">
+            @if(request('sort') == 'price_desc')
             <div class="sort__tag">
                 <span class="sort__span">
-                    @if(request('sort') == 'price_desc')
                     高い順に表示
-                    @else
-                    低い順に表示
-                    @endif
                     <input type="submit" value="×" class="sort__button" name="reset">
                 </span>
             </div>
+            @elseif(request('sort') == 'price_asc')
+            <div class="sort__tag">
+                <span class="sort__span">
+                    安い順に表示
+                    <input type="submit" value="×" class="sort__button" name="reset">
+                </span>
+            </div>
+            @endif
         </div>
     </form>
 </div>
 @endsection
 
 @section('content')
-<div class="main">
-    <form action="/products/{productId}" method="get" class="card-content">
-        @foreach($products as $product)
+<div class="cards">
+    @foreach($products as $product)
+    <form action="/products/{{ $product->id }}" method="get" class="card-content" enctype="multipart/form-data">
         <div class="fruit-card">
-            <button type="submit" name="id" class="fruit-card__button">
-                <input type="hidden" name="id" class="fruit-card__input">
+            <button type="submit" class="fruit-card__button">
+                <div class="fruit-img">
+                    <img src="{{ asset('/fruits-img/$product->image') }}" alt="">
+                </div>
+                <div class="card-group">
+                    <p class="fruit-name">{{ $product->name }}</p>
+                    <p class="fruit-price">¥{{ $product->price }}</p>
+                </div>
             </button>
-            <div class="fruit-img">
-                <img src="{{ asset('/fruits-img/kiwi.png') }}" alt="">
-            </div>
-            <div class="card-content">
-                <p class="fruit-name">{{ $product->name }}</p>
-                <p class="fruit-price">¥{{ $product->price }}</p>
-            </div>
         </div>
-        @endforeach
     </form>
-    <div class="paginate">
-        {{-- $products->links('vendor.pagination.bootstrap-4') --}}
-    </div>
+    @endforeach
+</div>
+<div class="paginate">
+    {{ $products->links('vendor.pagination.bootstrap-4') }}
 </div>
 @endsection

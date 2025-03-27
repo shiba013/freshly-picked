@@ -15,13 +15,32 @@ class Product extends Model
 
     public function seasons()
     {
-        return $this->belongsToMany(Season::class, 'product_season');
+        return $this->belongsToMany(Season::class, 'product_season', 'product_id', 'season_id')
+        ->withPivot('season_id');
     }
 
-    public function scopeProductId($query, $id)
+    public function scopeNameSearch($query, $name)
     {
-        if (!empty($id)) {
-            $query->where('id' , $id);
+        if (!empty($name))
+        {
+            $query->where('name',$name);
+        }
+    }
+
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if (!empty($keyword))
+        {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        };
+    }
+
+    public function scopePriceSort($query, $sort)
+    {
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc'); // 低い順
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc'); // 高い順
         }
     }
 }
