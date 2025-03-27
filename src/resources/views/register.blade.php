@@ -52,7 +52,7 @@
                 <span class="create-form__span">必須</span>
             </label>
             <div class="fruit-img">
-                <img src="{{ asset('/fruits-img/$product->image') }}" alt="">
+                <img src="{{-- asset('storage/' . $product->image) --}}" alt="">
             </div>
             <input type="file" name="image" id="image" class="create-form__file">
             <div class="alert">
