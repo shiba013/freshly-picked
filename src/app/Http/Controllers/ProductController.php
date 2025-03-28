@@ -74,52 +74,16 @@ class ProductController extends Controller
 
     public function create(ProductRequest $request)
     {
-        //画像の保存
         $image = $request->file('image')->getClientOriginalName();
         $request->file('image')->storeAs('images', basename($image), 'public');
-        //Storage::put('public/images', $image);
 
-        //商品の保存
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'image' => $image,
             'description' => $request->description,
         ]);
-
-        // 選択された季節を商品に関連付けて保存
         $product->seasons()->attach($request->seasons);
-
-        return redirect('/products');
+        return view('products');
     }
-
-/*
-    public function preview($filename)
-    {
-        $path = storage_path("app/public/fruits-img/{$filename}");
-        return response()->file($path);
-    }
-
-    public function store(Request $request) {
-        $seasons = Season::with('products')->scopeProductId($request->id)->get();
-        $products = Product::with('seasons')->get();
-        $productId = $products->only(['id','name','price','image','description']);
-        return view('detail', $productId);
-    }
-
-    public function image() {
-        $seasons = Season::with('products')->get();
-
-        //画像のアップロード
-        if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('uploads', 'public');
-
-            Product::create([
-                'name' => $request->name,
-                'image' => $image,
-            ]);
-        }
-        return view('detail', compact('seasons'));
-    }
-    */
 }

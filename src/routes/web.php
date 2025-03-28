@@ -23,5 +23,3 @@ Route::post('/products', [ProductController::class, 'create']);
 Route::get('/products/{productId}', [ProductController::class, 'detail']);
 Route::patch('/products/{productId}/update', [ProductController::class, 'update']);
 Route::delete('/products/{productId}/delete', [ProductController::class, 'destroy']);
-
-//Route::get('/preview/{filename}', [ProductController::class, 'preview']);

@@ -19,7 +19,7 @@
                 商品名
                 <span class="create-form__span">必須</span>
             </label>
-            <input type="text" name="name" id="name" class="create-form__input" placeholder="商品名を入力">
+            <input type="text" name="name" id="name" class="create-form__input" placeholder="商品名を入力" value="{{ old('name') }}">
             <div class="alert">
                 <p class="alert--danger">
                     @error('name')
@@ -34,7 +34,7 @@
                 値段
                 <span class="create-form__span">必須</span>
             </label>
-            <input type="text" name="price" id="price" class="create-form__input" placeholder="値段を入力">
+            <input type="text" name="price" id="price" class="create-form__input" placeholder="値段を入力" value="{{ old('price') }}">
             <div class="alert">
                 @if($errors->has('price'))
                 <p class="alert--danger">
@@ -52,9 +52,9 @@
                 <span class="create-form__span">必須</span>
             </label>
             <div class="fruit-img">
-                <img src="{{-- asset('storage/images/' . $product->image) --}}" alt="">
+                <img src="{{ asset('storage/images/' . old('image')) }}" alt="">
             </div>
-            <input type="file" name="image" id="image" class="create-form__file">
+            <input type="file" name="image" id="image" class="create-form__file" value="{{ old('image') }}">
             <div class="alert">
                 @if($errors->has('image'))
                 <p class="alert--danger">
@@ -75,8 +75,8 @@
             <div class="season-option">
                 @foreach($seasons as $season)
                 <label for="{{ $season->id }}" class="season-option__label">
-                    <input type="checkbox" name="seasons[]" id="{{ $season->id }}"
-                    value="{{ $season->id }}" class="season-option__input">
+                    <input type="checkbox" name="seasons[]" id="{{ $season->id }}" class="season-option__input" value="{{ $season->id }}"
+                    {{ (is_array(old('seasons')) && in_array($season->id , old('seasons'))) ? 'checked' : '' }}>
                     <span class="season-option__span">{{ $season->name }}</span>
                 </label>
                 @endforeach
@@ -95,7 +95,7 @@
                 商品説明
                 <span class="create-form__span">必須</span>
             </label>
-            <textarea name="description" id="description" cols="100" rows="10" class="create-form__textarea" placeholder="商品の説明を入力"></textarea>
+            <textarea name="description" id="description" cols="100" rows="10" class="create-form__textarea" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
             <div class="alert">
                 @if($errors->has('description'))
                 <p class="alert--danger">
@@ -116,4 +116,5 @@
         <button type="submit" class="button back-button">戻る</button>
     </form>
 </div>
+
 @endsection
