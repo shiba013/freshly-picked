@@ -35,6 +35,12 @@ php artisan migrate
 ``` bash
 php artisan db:seed
 ```
+
+8. 画像表示のためのシンボリックリンクの設定
+``` bash
+php artisan storage:link
+```
+
 ## 使用技術(実行環境)
 - PHP8.3.0
 - Laravel8.83.29

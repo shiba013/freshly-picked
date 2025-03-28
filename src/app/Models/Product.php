@@ -16,7 +16,6 @@ class Product extends Model
     public function seasons()
     {
         return $this->belongsToMany(Season::class, 'product_season', 'product_id', 'season_id');
-        //->withPivot('season_id');
     }
 
     public function scopeNameSearch($query, $name)
@@ -38,9 +37,9 @@ class Product extends Model
     public function scopePriceSort($query, $sort)
     {
         if ($sort === 'price_asc') {
-            $query->orderBy('price', 'asc'); // 低い順
+            $query->orderBy('price', 'asc');
         } elseif ($sort === 'price_desc') {
-            $query->orderBy('price', 'desc'); // 高い順
+            $query->orderBy('price', 'desc');
         }
     }
 }

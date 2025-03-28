@@ -49,19 +49,20 @@ class ProductController extends Controller
         $image = $request->file('image')->getClientOriginalName();
         $request->file('image')->storeAs('images', basename($image), 'public');
 
-        $product = Product::update([
+        $product->update([
             'name' => $request->name,
             'price' => $request->price,
             'image' => $image,
             'description' => $request->description,
         ]);
-        $product->seasons()->sync($request->seasons,false);
+
+        $product->seasons()->sync($request->seasons);
         return redirect('/products');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $productId)
     {
-        Product::find($request->id)->delete();
+        Product::with('seasons')->find($productId)->delete();
         return redirect('/products');
     }
 
