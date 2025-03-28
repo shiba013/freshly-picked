@@ -58,7 +58,7 @@
         <div class="fruit-card">
             <button type="submit" class="fruit-card__button">
                 <div class="fruit-img">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="">
+                    <img src="{{ asset('storage/images/' . $product->image) }}" alt="">
                 </div>
                 <div class="card-group">
                     <p class="fruit-name">{{ $product->name }}</p>

@@ -46,14 +46,13 @@ class ProductController extends Controller
     {
         $product = Product::with('seasons')->find($productId);
 
-        $imagePath = $request->file('image')
-        ->storeAs('public/images', $request
-        ->file('image')->getClientOriginalName());
+        $image = $request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('images', basename($image), 'public');
 
         $product = Product::update([
             'name' => $request->name,
             'price' => $request->price,
-            'image' => $imagePath,
+            'image' => $image,
             'description' => $request->description,
         ]);
         $product->seasons()->sync($request->seasons,false);
@@ -76,15 +75,14 @@ class ProductController extends Controller
     {
         //画像の保存
         $image = $request->file('image')->getClientOriginalName();
-        $imagePath = 'images/' . $image;
-        $request->file('image')->storeAs('images', basename($imagePath), 'public');
-        //Storage::put('public/fruits-img', $filename);
+        $request->file('image')->storeAs('images', basename($image), 'public');
+        //Storage::put('public/images', $image);
 
         //商品の保存
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
-            'image' => $imagePath,
+            'image' => $image,
             'description' => $request->description,
         ]);
 

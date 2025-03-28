@@ -28,7 +28,7 @@
                     </p>
                 </div>
                 <div class="fruit-img">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="">
+                    <img src="{{ asset('storage/images/' . $product->image) }}" alt="">
                 </div>
                 <div class="card-content">
                     <input type="file" name="image" class="file__input">
